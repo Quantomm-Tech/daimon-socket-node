@@ -9,7 +9,7 @@ router.get('/mensajes', ( req: Request, res: Response  ) => {
 
     res.json({
         ok: true,
-        mensaje: 'Todo esta bien!!'
+        mensaje: 'Todo esta bien el servicio funciona!!'
     });
 
 });
