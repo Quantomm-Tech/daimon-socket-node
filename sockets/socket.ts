@@ -1,6 +1,4 @@
-import { Socket } from 'socket.io';
-import socketIO from 'socket.io';
-
+import socketIO, { Socket } from 'socket.io';
 
 export const disconnect = ( client:Socket )=>{
 
@@ -10,8 +8,6 @@ export const disconnect = ( client:Socket )=>{
       })
 
 }
-
-
 
 // Escuchar mensajes
 export const mensaje = ( client:Socket ,io: socketIO.Server ) =>{

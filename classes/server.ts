@@ -68,17 +68,13 @@ export default class Server {
             }
 
             // Verificar y decodificar el token JWT
-            //@ts-ignore
             jwt.verify(token, getKey, (err: any, decoded: JwtPayload | undefined) => {
               if (err) {
-                console.log('Error de autenticación: ', err)
+                console.error('Error de autenticación: ', err)
                 // El token no es válido, rechazar la conexión
                 return next(new Error('Error de autenticación'));
               }
         
-              // El token es válido, se puede acceder a la propiedad 'decoded' para obtener información adicional si es necesario
-              //@ts-ignore
-              socket.decoded = decoded;
               next();
             });
         });
