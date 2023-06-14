@@ -1,11 +1,9 @@
-import { Socket } from 'socket.io';
-import socketIO from 'socket.io';
-
+import socketIO, { Socket } from 'socket.io';
 
 export const disconnect = ( client:Socket )=>{
 
     client.on('disconnect', ()=>{
-        console.log('Client disconnected');
+        console.log('Client disconnected\n');
         
       })
 
@@ -15,7 +13,7 @@ export const disconnect = ( client:Socket )=>{
 export const mensaje = ( client:Socket ,io: socketIO.Server ) =>{
 
   client.on('client-Mensaje', ( payload: {mensaje:string, docType: string, fecha:Date}, callback )=>{
-       
+
     const id = 123456;
     callback({ id, fecha : new Date().getTime() , msg: 'Confirmo recepcion del mensaje'});
 
