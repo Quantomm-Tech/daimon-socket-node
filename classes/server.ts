@@ -4,7 +4,7 @@ import { SERVER_PORT } from '../global/environment';
 import socketIO from 'socket.io';
 import http from 'http';
 import * as socket from '../sockets/socket';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import jwksClient from "jwks-rsa";
 
 const client = jwksClient({
@@ -52,7 +52,7 @@ export default class Server {
             const token = socket.handshake.auth.token;
             
             if (!token) {
-              const error = new Error('Token de autenticación no proporcionado');
+              const error = new Error('Token de autenticación no proporcionado desde la app');
               console.error(error);
               return next(error);
             }
@@ -68,7 +68,7 @@ export default class Server {
             }
 
             // Verificar y decodificar el token JWT
-            jwt.verify(token, getKey, (err: any, decoded: JwtPayload | undefined) => {
+            jwt.verify(token, getKey, (err: any) => {
               if (err) {
                 console.error('Error de autenticación: ', err)
                 // El token no es válido, rechazar la conexión
@@ -88,7 +88,7 @@ export default class Server {
           // Desconectar
           socket.disconnect( client );
 
-          // this.discconectAll()
+          //this.discconectAll()
 
         });
     }
@@ -96,8 +96,6 @@ export default class Server {
     
     private discconectAll() {
       this.io.disconnectSockets()
-    
-      console.log('desconectar sockets')
     }
 
     start( callback: Function ) {

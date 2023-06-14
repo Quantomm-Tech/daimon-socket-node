@@ -53,6 +53,36 @@ router.post('/mensajes/:id', ( req: Request, res: Response  ) => {
 });
 
 
+router.post('/notification/:companyId', ( req: Request, res: Response  ) => {
+
+    const companyId = req.params.companyId;
+
+    const notificationType = req.body.notificationType
+
+    if (notificationType && companyId) {
+        const io = req.app.get('io')
+        if (io ) {
+            console.log(`Se va emitir a: notification-${companyId}`)
+            io.emit(`notification-${companyId}`, req.body)
+        }
+
+        res.json({
+            isSuccess: true,
+            data: req.body
+        });
+
+    } else {
+        res.json({
+            isSuccess: false,
+            error: 'Bad request'
+        });
+    }
+    
+
+        
+
+
+});
 
 export default router;
 
