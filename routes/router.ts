@@ -1,9 +1,8 @@
 
 import { Router, Request, Response } from 'express';
+import { authMiddleware } from './authMiddleware';
 
 const router = Router();
-
-
 
 router.get('/mensajes', ( req: Request, res: Response  ) => {
 
@@ -14,10 +13,19 @@ router.get('/mensajes', ( req: Request, res: Response  ) => {
 
 });
 
-router.post('/mensajes', ( req: Request, res: Response  ) => {
+router.post('/mensajes', authMiddleware, ( req: Request, res: Response  ) => {
 
     const cuerpo = req.body.cuerpo;
     const de     = req.body.de;
+
+    // Enviar mensaje al cliente
+    const io = req.app.get('io')
+
+    if (io) {
+        console.log('Se va emitir ...')
+        io.emit('message', req.body)
+    }
+        
 
     res.json({
         ok: true,
@@ -34,6 +42,7 @@ router.post('/mensajes/:id', ( req: Request, res: Response  ) => {
     const de     = req.body.de;
     const id     = req.params.id;
 
+
     res.json({
         ok: true,
         cuerpo,
@@ -44,6 +53,36 @@ router.post('/mensajes/:id', ( req: Request, res: Response  ) => {
 });
 
 
+router.post('/notification/:companyId', ( req: Request, res: Response  ) => {
+
+    const companyId = req.params.companyId;
+
+    const notificationType = req.body.notificationType
+
+    if (notificationType && companyId) {
+        const io = req.app.get('io')
+        if (io ) {
+            console.log(`Se va emitir a: notification-${companyId}`)
+            io.emit(`notification-${companyId}`, req.body)
+        }
+
+        res.json({
+            isSuccess: true,
+            data: req.body
+        });
+
+    } else {
+        res.json({
+            isSuccess: false,
+            error: 'Bad request'
+        });
+    }
+    
+
+        
+
+
+});
 
 export default router;
 
