@@ -41,7 +41,6 @@ export default class Server {
 
   private listenSockets() {
     this.io.use((socket, next) => {
-      console.log("socket.handshake: ", socket.handshake);
       const token = socket.handshake.auth.token;
 
       if (!token) {

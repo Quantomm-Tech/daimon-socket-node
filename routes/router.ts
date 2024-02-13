@@ -78,8 +78,7 @@ router.post("/paystate/:beneficiaryId", (req: Request, res: Response) => {
     }
 
     res.json({
-      isSuccess: true,
-      data: req.body,
+      ...req.body,
     });
   } else {
     res.json({
