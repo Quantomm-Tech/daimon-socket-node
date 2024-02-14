@@ -3,6 +3,10 @@ import { authMiddleware } from "./authMiddleware";
 
 const router = Router();
 
+router.get("/", (req: Request, res: Response) => {
+  res.send("Ready...");
+});
+
 router.get("/mensajes", (req: Request, res: Response) => {
   res.json({
     ok: true,
