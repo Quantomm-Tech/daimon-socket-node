@@ -10,7 +10,7 @@ router.get("/", (req: Request, res: Response) => {
 router.get("/mensajes", (req: Request, res: Response) => {
   res.json({
     ok: true,
-    mensaje: "Todo esta bien el servicio funciona!!",
+    mensaje: "!!Todo esta bien el servicio funciona!!",
   });
 });
 
